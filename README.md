@@ -12,19 +12,15 @@
 
 ---
 
-`argos-eye` is a single Claude Code skill that turns an image and a
-natural-language target into a verified pixel coordinate. It uses an
-iterative zoom-and-refine loop to work around a known limitation of
-current vision-language models: they describe well, but they cannot
-reliably point.
+`argos-eye` tells Claude where to point.
 
-The project is intentionally narrow. It does one thing — *locate a
-described target in an image* — and it leaves screenshot capture,
-clicking, and workflow orchestration to the caller.
+Not "somewhere around here." Not a plausible-sounding pixel it
+invented. A verified coordinate, with an audit trail, from a single
+skill folder.
 
 ## Table of Contents
 
-- [Why](#why)
+- [The wall every visual agent hits](#the-wall-every-visual-agent-hits)
 - [Features](#features)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
@@ -32,7 +28,7 @@ clicking, and workflow orchestration to the caller.
 - [How It Works](#how-it-works)
 - [Configuration](#configuration)
 - [Output Format](#output-format)
-- [Scope](#scope)
+- [Scope, by design](#scope-by-design)
 - [Limitations](#limitations)
 - [FAQ](#faq)
 - [Development](#development)
@@ -40,21 +36,19 @@ clicking, and workflow orchestration to the caller.
 - [References](#references)
 - [License](#license)
 
-## Why
+## The wall every visual agent hits
 
-Vision-language models describe images well but struggle to point at
-them. On `ScreenSpot-Pro`, GPT-4o scores roughly **0.8%** on one-shot
-coordinate prediction; Claude's documentation notes that precise
-spatial reasoning is unreliable for small or densely packed targets.
+Ask a vision-language model where something is in an image and it
+will, almost always, hallucinate. GPT-4o scores **0.8%** on
+ScreenSpot-Pro one-shot. Anthropic's own docs flag it: *"spatial
+reasoning is limited."* This is the silent bug in every
+screenshot-driven agent shipping today.
 
-Any agent that needs a pixel-accurate location — to click, crop,
-verify, or audit — hits this wall.
+Research settled it years ago. Multi-step zoom-and-refine (R-VLM,
+UI-Zoomer, CropVLM, Zoom Consistency) closes most of the gap. None of
+it shipped as a drop-in skill.
 
-Research has consistently shown that multi-step *zoom-and-refine*
-pipelines close most of this gap (see [References](#references)).
-`argos-eye` is a minimal, production-ready implementation of that
-pattern, packaged as a single Claude Code skill so it can be dropped
-into any workflow.
+`argos-eye` is that pattern, in one skill folder.
 
 ## Features
 
@@ -72,6 +66,8 @@ into any workflow.
 - **Zero training, zero fine-tuning** — works on top of whatever VLM
   Claude Code is configured with.
 - **One skill folder** — no daemon, no server, no plugin manifest.
+- **Small on purpose** — the whole thing is under 500 lines of
+  Python. Read it in one sitting.
 
 ## Installation
 
@@ -199,7 +195,14 @@ The `evidence/` folder contains:
 └── result.json         final output
 ```
 
-## Scope
+## Scope, by design
+
+`argos-eye` answers one question: *where in this image is the thing
+the user described?*
+
+Anything else — capturing the screenshot, clicking the coordinate,
+orchestrating a workflow — belongs to the caller. This is the
+contract, not a limitation.
 
 | In scope | Out of scope |
 |---|---|
@@ -207,10 +210,6 @@ The `evidence/` folder contains:
 | Evidence persistence | Clicking / typing / driving a UI |
 | Confidence reporting | Orchestrating multi-step workflows |
 | Coordinate remapping | Fine-tuning the underlying VLM |
-
-`argos-eye` answers one question: *where in this image is the thing
-you described?* Anything before or after that is the caller's
-responsibility.
 
 ## Limitations
 
@@ -221,8 +220,10 @@ responsibility.
 - Non-English UI labels work but are not systematically evaluated.
 - The skill is bounded by the configured VLM's reasoning — it does
   not train, fine-tune, or ensemble models.
-- Performance depends on the underlying model's cost and latency;
-  three iterations means three image calls.
+- Three iterations means three image calls; cost and latency track
+  the underlying model.
+
+This is not a magic trick. It is a loop that refuses to guess.
 
 ## FAQ
 
@@ -243,6 +244,13 @@ has been tested on dashboards, photos, and documents.
 **Is the evidence folder safe to delete?**
 Yes. It is write-only from the skill's perspective.
 
+**Why not just use OmniParser?**
+OmniParser pre-parses every UI element in an image and lets you pick
+by label. It is excellent, and argos-eye cites it. The difference is
+scope: OmniParser wants to understand the whole screen; argos-eye
+wants to find one thing in any image — screenshot or not — with a
+fraction of the moving parts.
+
 ## Development
 
 ```sh
@@ -255,8 +263,9 @@ pytest
 Contributions are welcome. Before opening a pull request, please:
 
 1. Open an issue describing the change.
-2. Keep the scope aligned with the [Scope](#scope) table — feature
-   requests that expand beyond *image → coordinate* will be closed.
+2. Keep the scope aligned with the [Scope, by design](#scope-by-design)
+   table — feature requests that expand beyond *image → coordinate*
+   will be closed.
 3. Include a test and, where relevant, an updated example under
    `examples/`.
 
