@@ -5,10 +5,9 @@
 </p>
 
 <p align="center">
-  <a href="#"><img alt="PyPI" src="https://img.shields.io/pypi/v/argos-eye.svg"></a>
-  <a href="#"><img alt="Python" src="https://img.shields.io/pypi/pyversions/argos-eye.svg"></a>
-  <a href="#"><img alt="License" src="https://img.shields.io/pypi/l/argos-eye.svg"></a>
-  <a href="#"><img alt="Claude Code" src="https://img.shields.io/badge/claude--code-compatible-5A67D8.svg"></a>
+  <img alt="Python" src="https://img.shields.io/badge/python-3.10%2B-blue.svg">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-green.svg">
+  <img alt="Claude Code" src="https://img.shields.io/badge/claude--code-compatible-5A67D8.svg">
 </p>
 
 ---
@@ -76,36 +75,19 @@ into any workflow.
 
 ## Installation
 
-```sh
-pip install argos-eye
-argos-eye init
-```
-
-`argos-eye init` installs the skill at
-`~/.claude/skills/argos-eye/` (or the path specified by
-`CLAUDE_SKILLS_DIR`) and verifies that Claude Code can see it.
-
-<details>
-<summary>Using <code>uv</code></summary>
+Install from source (PyPI release is planned):
 
 ```sh
-uv tool install argos-eye
-argos-eye init
-```
-
-</details>
-
-<details>
-<summary>From source</summary>
-
-```sh
-git clone https://github.com/tom-kim/argos-eye
+git clone https://github.com/xhae123/argos-eye
 cd argos-eye
 pip install -e .
 argos-eye init
 ```
 
-</details>
+`argos-eye init` installs the skill at `~/.claude/skills/argos-eye/`
+(or the path specified by `CLAUDE_SKILLS_DIR`) and verifies that
+Claude Code can see it. Once PyPI publishing is set up,
+`pip install argos-eye` will become the one-liner equivalent.
 
 ## Quick Start
 
@@ -264,7 +246,7 @@ Yes. It is write-only from the skill's perspective.
 ## Development
 
 ```sh
-git clone https://github.com/tom-kim/argos-eye
+git clone https://github.com/xhae123/argos-eye
 cd argos-eye
 pip install -e ".[dev]"
 pytest
@@ -288,7 +270,7 @@ link back to this repository is appreciated:
   author = {Kim, Tom},
   title  = {argos-eye: Pixel-precise visual grounding for Claude Code},
   year   = {2026},
-  url    = {https://github.com/tom-kim/argos-eye}
+  url    = {https://github.com/xhae123/argos-eye}
 }
 ```
 
