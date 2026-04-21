@@ -11,10 +11,6 @@
   <a href="#"><img alt="Claude Code" src="https://img.shields.io/badge/claude--code-compatible-5A67D8.svg"></a>
 </p>
 
-<p align="center">
-  <img src="docs/demo.gif" alt="argos-eye demo" width="760">
-</p>
-
 ---
 
 `argos-eye` is a single Claude Code skill that turns an image and a
