@@ -34,20 +34,13 @@ it stayed in papers.
 
 - **Zoom-and-refine loop** — iterative crop-reread until the model
   agrees with itself.
-- **Zoom consistency stop** — early termination when two consecutive
-  predictions converge.
 - **Auditable output** — every intermediate crop and decision is
   persisted next to the result.
-- **Coordinate remapping** — results are always reported in the
-  original image's pixel space.
-- **Graceful failure** — when a target cannot be located the skill
-  says so, with the best-effort bounding box and a low confidence
-  score, instead of hallucinating.
-- **Zero training, zero fine-tuning** — works on top of whatever VLM
-  Claude Code is configured with.
+- **Refuses to guess** — when a target cannot be located, returns a
+  null bbox with a reason. Never a fabricated coordinate.
 - **One skill folder** — no daemon, no server, no plugin manifest.
-- **Small on purpose** — the whole thing is under 500 lines of
-  Python. Read it in one sitting.
+- **Zero training** — works on top of whatever VLM Claude Code is
+  configured with.
 
 ## Installation
 
@@ -250,17 +243,21 @@ research. `argos-eye` is a practical implementation, not a novel
 technique.
 
 - **R-VLM** — Region-Aware Vision Language Model for Precise GUI
-  Grounding. ACL Findings 2025. arXiv:2507.05673.
+  Grounding. ACL Findings 2025.
+  [arXiv:2507.05673](https://arxiv.org/abs/2507.05673)
 - **UI-Zoomer** — Uncertainty-Driven Adaptive Zoom-In for GUI
-  Grounding. arXiv:2604.14113.
+  Grounding.
+  [arXiv:2604.14113](https://arxiv.org/abs/2604.14113)
 - **Zoom Consistency** — A Free Confidence Signal in Multi-Step
-  Visual Grounding Pipelines. arXiv:2604.15376.
+  Visual Grounding Pipelines.
+  [arXiv:2604.15376](https://arxiv.org/abs/2604.15376)
 - **CropVLM** — Learning to Zoom for Fine-Grained Vision-Language
-  Perception. arXiv:2511.19820.
-- **OmniParser** — Pure Vision Based GUI Agent. Microsoft, 2024.
-  arXiv:2408.00203.
+  Perception.
+  [arXiv:2511.19820](https://arxiv.org/abs/2511.19820)
+- **OmniParser** — Pure Vision Based GUI Agent. Microsoft.
+  [arXiv:2408.00203](https://arxiv.org/abs/2408.00203)
 - **GUI-Actor** — Coordinate-Free Visual Grounding for GUI Agents.
-  arXiv:2506.03143.
+  [arXiv:2506.03143](https://arxiv.org/abs/2506.03143)
 
 ## License
 
