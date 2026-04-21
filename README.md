@@ -86,13 +86,15 @@ Full signature:
 
 ## How It Works
 
-```
-       ┌──────── refine (up to N times) ────────┐
-       ▼                                        │
-    propose ──► crop ──► re-inspect ──► converged?
-                                             │ yes
-                                             ▼
-                                           remap ──► output
+```mermaid
+flowchart LR
+    image([image]) --> propose[propose bbox]
+    propose --> crop[crop]
+    crop --> reinspect[re-inspect]
+    reinspect --> conv{converged?}
+    conv -- "no, up to N iter" --> crop
+    conv -- "yes" --> remap[remap]
+    remap --> output([output])
 ```
 
 1. **Propose** — the model is asked where the target is in the full
