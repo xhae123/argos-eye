@@ -108,7 +108,6 @@ full audit trail to `./.argos-eye/<timestamp>/`.
 | `target` | string | *required* | Natural-language description of the element to locate. |
 | `max_iter` | int | `3` | Maximum zoom-refine iterations. |
 | `zoom` | float | `3.0` | Scale factor applied during cropping (3×–5× works best in practice). |
-| `stop_on_converge` | bool | `true` | Terminate early when two consecutive predictions agree. |
 | `evidence_dir` | path | `./.argos-eye` | Where to persist crops and decisions. |
 | `min_confidence` | float | `0.5` | Below this, the call reports "not found" rather than a point. |
 
@@ -137,22 +136,6 @@ full audit trail to `./.argos-eye/<timestamp>/`.
 
 The loop is bounded. If `max_iter` is reached without convergence,
 the skill returns its best guess and flags low confidence.
-
-## Configuration
-
-Defaults can be overridden via a `.argos-eye.toml` in the project
-root or the user home directory:
-
-```toml
-[argos-eye]
-max_iter         = 3
-zoom             = 3.0
-min_confidence   = 0.5
-evidence_dir     = ".argos-eye"
-```
-
-Skill invocation arguments always take precedence over config file
-values, which take precedence over defaults.
 
 ## Output Format
 
