@@ -10,31 +10,11 @@
   <img alt="Claude Code" src="https://img.shields.io/badge/claude--code-compatible-5A67D8.svg">
 </p>
 
----
-
 `argos-eye` tells Claude where to point.
 
 Not "somewhere around here." Not a plausible-sounding pixel it
 invented. A verified coordinate, with an audit trail, from a single
 skill folder.
-
-## Table of Contents
-
-- [The wall every visual agent hits](#the-wall-every-visual-agent-hits)
-- [Features](#features)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Usage](#usage)
-- [How It Works](#how-it-works)
-- [Configuration](#configuration)
-- [Output Format](#output-format)
-- [Scope, by design](#scope-by-design)
-- [Limitations](#limitations)
-- [FAQ](#faq)
-- [Development](#development)
-- [Citation](#citation)
-- [References](#references)
-- [License](#license)
 
 ## The wall every visual agent hits
 
@@ -45,8 +25,8 @@ reasoning is limited."* This is the silent bug in every
 screenshot-driven agent shipping today.
 
 Research settled it years ago. Multi-step zoom-and-refine (R-VLM,
-UI-Zoomer, CropVLM, Zoom Consistency) closes most of the gap. None of
-it shipped as a drop-in skill.
+UI-Zoomer, CropVLM, Zoom Consistency) closes most of the gap. Most of
+it stayed in papers.
 
 `argos-eye` is that pattern, in one skill folder.
 
@@ -85,7 +65,7 @@ argos-eye init
 Claude Code can see it. Once PyPI publishing is set up,
 `pip install argos-eye` will become the one-liner equivalent.
 
-## Quick Start
+## Usage
 
 In any Claude Code session:
 
@@ -93,10 +73,10 @@ In any Claude Code session:
 /argos-eye image=./screen.png target="Sign in button"
 ```
 
-`argos-eye` runs the loop, returns a coordinate bundle, and writes a
+The skill runs the loop, returns a coordinate bundle, and writes a
 full audit trail to `./.argos-eye/<timestamp>/`.
 
-## Usage
+Full signature:
 
 ```
 /argos-eye image=<path> target=<description> [options]
@@ -230,10 +210,9 @@ Yes. It is write-only from the skill's perspective.
 
 **Why not just use OmniParser?**
 OmniParser pre-parses every UI element in an image and lets you pick
-by label. It is excellent, and argos-eye cites it. The difference is
-scope: OmniParser wants to understand the whole screen; argos-eye
-wants to find one thing in any image — screenshot or not — with a
-fraction of the moving parts.
+by label. Different scope: OmniParser wants to understand the whole
+screen; argos-eye wants to find one thing in any image — screenshot
+or not — with fewer moving parts.
 
 ## Development
 
@@ -244,7 +223,7 @@ pip install -e ".[dev]"
 pytest
 ```
 
-Contributions are welcome. Before opening a pull request, please:
+Before opening a pull request:
 
 1. Open an issue describing the change.
 2. Keep the scope aligned with the [Scope, by design](#scope-by-design)
@@ -255,10 +234,7 @@ Contributions are welcome. Before opening a pull request, please:
 
 ## Citation
 
-If `argos-eye` is useful in your research or product, a citation or
-link back to this repository is appreciated:
-
-```
+```bibtex
 @software{argos_eye,
   author = {Kim, Tom},
   title  = {argos-eye: Pixel-precise visual grounding for Claude Code},
