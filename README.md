@@ -87,14 +87,23 @@ Full signature:
 ## How It Works
 
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': {'fontFamily':'ui-sans-serif, system-ui, -apple-system, sans-serif'}}}%%
 flowchart LR
     image([image]) --> propose[propose bbox]
     propose --> crop[crop]
     crop --> reinspect[re-inspect]
-    reinspect --> conv{converged?}
-    conv -- "no, up to N iter" --> crop
+    reinspect --> conv{{converged?}}
+    conv -- "no · up to N" --> crop
     conv -- "yes" --> remap[remap]
-    remap --> output([output])
+    remap --> output([coordinate])
+
+    classDef io     fill:#0f172a,stroke:#0f172a,color:#ffffff
+    classDef step   fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.2px
+    classDef decide fill:#fef3c7,stroke:#f59e0b,color:#1e1b4b,stroke-width:1.2px
+
+    class image,output io
+    class propose,crop,reinspect,remap step
+    class conv decide
 ```
 
 1. **Propose** — the model is asked where the target is in the full
