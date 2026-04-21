@@ -115,11 +115,12 @@ full audit trail to `./.argos-eye/<timestamp>/`.
 ## How It Works
 
 ```
-   ┌──────────── iterate (up to N times) ────────────┐
-   │                                                 │
-image ──► propose bbox ──► crop ──► re-inspect ──► converged?
-                                          │ no            │ yes
-                                          └── refine ─────┘ ──► remap ──► output
+       ┌──────── refine (up to N times) ────────┐
+       ▼                                        │
+    propose ──► crop ──► re-inspect ──► converged?
+                                             │ yes
+                                             ▼
+                                           remap ──► output
 ```
 
 1. **Propose** — the model is asked where the target is in the full
